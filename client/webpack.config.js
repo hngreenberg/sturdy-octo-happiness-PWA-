@@ -22,7 +22,7 @@ module.exports = () => {
     plugins: [
       new HtmlWebpackPlugin({
         template: './index.html',
-        title: TextEditor
+        title: 'TextEditor'
       }),
       new InjectManifest(
         {
@@ -31,9 +31,10 @@ module.exports = () => {
         }),
         new WebpackPwaManifest({
           fingerprints: false,
+
           inject: true,
-          name: TextEditor,
-          short_name: editor,
+          name: 'TextEditor',
+          short_name: 'jate',
           description: 'An offline text editor application',
           background_color: '#ffffff',
           theme_color: '#ffffff',
@@ -45,7 +46,8 @@ module.exports = () => {
               sizes: [96, 128, 192, 256, 384, 512],
               destination: path.join('assets', 'icons'),
             },
-    ],
+          ],
+        }),],
 
     module: {
       rules: [
@@ -54,18 +56,22 @@ module.exports = () => {
           use: ['style-loader', 'css-loader'],
         },
         {
+          test: /\.(png|svg|jpg|jpeg|gif)$/i,
+          type: 'asset/resource',
+        },
+        {
           test: /\.m?js$/,
           exclude: /(node_modules|bower_components)/,
           use: {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-env'],
-              plugins: ['@babel/plugin-proposal-object-rest-spread'],
+              plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/transform-runtime'],
             },
           },
-        }
-        
+        },
       ],
     },
   };
 };
+  
